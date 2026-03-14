@@ -8,7 +8,7 @@ class UserResponse(BaseModel):
     """Response schema for user data."""
 
     id: uuid.UUID
-    phone_number: str
+    email: str
     created_at: datetime
 
     model_config = {"from_attributes": True}

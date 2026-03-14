@@ -36,7 +36,7 @@ async def get_current_user(
         )
 
     firebase_uid: str = decoded_token["uid"]
-    phone_number: str = decoded_token.get("phone_number", "")
+    email: str = decoded_token.get("email", "")
 
     user_repo = UserRepository(db)
 
@@ -47,7 +47,7 @@ async def get_current_user(
         # Auto-provision on first login
         user = await user_repo.create(
             firebase_uid=firebase_uid,
-            phone_number=phone_number,
+            email=email,
         )
 
     return user

@@ -21,7 +21,7 @@ def verify_firebase_token(id_token: str) -> dict:
     """
     Verify a Firebase ID token and return the decoded claims.
 
-    Returns dict with at least: 'uid', 'phone_number'
+    Returns dict with at least: 'uid', 'email'
     Raises firebase_admin.auth.InvalidIdTokenError on failure.
     """
     decoded = auth.verify_id_token(id_token)
