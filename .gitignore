@@ -16,8 +16,11 @@ env/
 # Environment variables
 .env
 
+# Docker
+docker-compose.yml
+
 # Firebase credentials
-firebase-service-account.json
+project-helios-firebase-service-account.json
 
 # IDE
 .vscode/
