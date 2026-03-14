@@ -10,9 +10,12 @@ from app.routers import analysis, daily_logs, targets
 async def lifespan(app: FastAPI):
     """Startup and shutdown events."""
     # Startup: initialize Firebase Admin SDK
+    print("[STARTUP] Initializing Firebase Admin SDK...")
     init_firebase()
+    print("[STARTUP] Firebase initialized. Ready to accept requests.")
     yield
     # Shutdown: nothing to clean up for now
+    print("[SHUTDOWN] Application shutting down.")
 
 
 app = FastAPI(

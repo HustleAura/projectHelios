@@ -40,3 +40,4 @@ coverage.xml
 
 # Alembic
 alembic/versions/__pycache__/
+alembic.ini

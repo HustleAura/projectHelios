@@ -21,8 +21,10 @@ class TargetService:
 
     async def get_targets(self, user_id: uuid.UUID) -> TargetConfig:
         """Get the current target config for a user."""
+        print(f"[GET_TARGETS] user_id={user_id}")
         config = await self.target_repo.get_by_user_id(user_id)
         if config is None:
+            print(f"[GET_TARGETS] No targets configured for user_id={user_id}")
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
                 detail={
@@ -30,6 +32,7 @@ class TargetService:
                     "message": "No targets configured. Please set your targets first.",
                 },
             )
+        print(f"[GET_TARGETS] Found targets (cal={config.calorie_target}, prot={config.protein_target}, sleep={config.sleep_target})")
         return config
 
     async def update_targets(
@@ -42,15 +45,18 @@ class TargetService:
         2. If a daily_log exists for today, update its snapshot fields.
         All within a single transaction (managed by the session-per-request pattern).
         """
+        print(f"[UPDATE_TARGETS] user_id={user_id}, data={data.model_dump()}")
         config = await self.target_repo.upsert(
             user_id=user_id,
             calorie_target=data.calorie_target,
             protein_target=data.protein_target,
             sleep_target=data.sleep_target,
         )
+        print(f"[UPDATE_TARGETS] Upserted target_configs for user_id={user_id}")
 
         # FR6: Propagate to today's log snapshot
         today = date.today()
+        print(f"[UPDATE_TARGETS] Propagating snapshot to today's log ({today})...")
         await self.log_repo.update_snapshot_for_user_date(
             user_id=user_id,
             log_date=today,
@@ -59,4 +65,5 @@ class TargetService:
             sleep_target=data.sleep_target,
         )
 
+        print("[UPDATE_TARGETS] Done.")
         return config

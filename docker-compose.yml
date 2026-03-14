@@ -21,7 +21,7 @@ services:
     ports:
       - "8000:8000"
     environment:
-      DATABASE_URL: postgresql+asyncpg://postgres:admin@localhost:5432/projectHeliosPgDb
+      DATABASE_URL: postgresql+asyncpg://postgres:admin@db:5432/projectHeliosPgDb
       FIREBASE_PROJECT_ID: project-helios-72de9
       FIREBASE_SERVICE_ACCOUNT_PATH: /run/secrets/project-helios-firebase-service-account.json
     depends_on:

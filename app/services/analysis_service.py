@@ -21,6 +21,8 @@ class AnalysisService:
                  = "under"   if actual < target_snapshot
         """
 
+        print(f"[COMPUTE] Computing analysis for log_id={log.id}, date={log.date}")
+
         def _analyze(actual, target) -> MetricAnalysis:
             if actual is None:
                 return MetricAnalysis(
@@ -38,7 +40,7 @@ class AnalysisService:
                 status=status,
             )
 
-        return DailyAnalysisResponse(
+        result = DailyAnalysisResponse(
             date=log.date,
             metrics={
                 "calories": _analyze(log.calories_actual, log.calorie_target_snapshot),
@@ -50,3 +52,5 @@ class AnalysisService:
                 is_period_day=log.is_period_day,
             ),
         )
+        print(f"[COMPUTE] Done — calories={result.metrics['calories'].status}, protein={result.metrics['protein'].status}, sleep={result.metrics['sleep'].status}")
+        return result
