@@ -22,8 +22,8 @@ class User(Base):
         nullable=False,
         index=True,
     )
-    phone_number: Mapped[str] = mapped_column(
-        String(20),
+    email: Mapped[str] = mapped_column(
+        String(255),
         unique=True,
         nullable=False,
     )

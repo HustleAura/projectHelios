@@ -37,7 +37,7 @@ async_session_test = async_sessionmaker(
 # Fake Firebase user for tests
 # ---------------------------------------------------------------------------
 FAKE_FIREBASE_UID = "test-firebase-uid-12345"
-FAKE_PHONE_NUMBER = "+919999999999"
+FAKE_EMAIL = "testuser@example.com"
 
 
 def _mock_verify_firebase_token(token: str) -> dict:
@@ -46,7 +46,7 @@ def _mock_verify_firebase_token(token: str) -> dict:
         raise Exception("Invalid token")
     return {
         "uid": FAKE_FIREBASE_UID,
-        "phone_number": FAKE_PHONE_NUMBER,
+        "email": FAKE_EMAIL,
     }
 
 
@@ -107,7 +107,7 @@ async def test_user(db_session: AsyncSession) -> User:
     """Create and return a test user in the database."""
     user = User(
         firebase_uid=FAKE_FIREBASE_UID,
-        phone_number=FAKE_PHONE_NUMBER,
+        email=FAKE_EMAIL,
     )
     db_session.add(user)
     await db_session.flush()

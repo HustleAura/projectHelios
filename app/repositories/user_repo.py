@@ -23,10 +23,10 @@ class UserRepository:
         )
         return result.scalar_one_or_none()
 
-    async def create(self, firebase_uid: str, phone_number: str) -> User:
+    async def create(self, firebase_uid: str, email: str) -> User:
         user = User(
             firebase_uid=firebase_uid,
-            phone_number=phone_number,
+            email=email,
         )
         self.db.add(user)
         await self.db.flush()  # Populate id and defaults without committing
