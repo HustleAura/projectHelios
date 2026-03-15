@@ -12,6 +12,7 @@ class Settings(BaseSettings):
 
     # Database
     DATABASE_URL: str
+    ALEMBIC_DATABASE_URL: str  # Separate URL for Alembic migrations (if needed)
 
     # Firebase
     FIREBASE_PROJECT_ID: str

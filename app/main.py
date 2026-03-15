@@ -1,14 +1,27 @@
 from contextlib import asynccontextmanager
 
+from alembic import command
+from alembic.config import Config
 from fastapi import FastAPI
 
 from app.firebase import init_firebase
 from app.routers import analysis, daily_logs, targets
 
 
+def run_migrations():
+    """Run Alembic migrations to ensure the database schema is up to date."""
+    alembic_cfg = Config("alembic.ini")
+    command.upgrade(alembic_cfg, "head")
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Startup and shutdown events."""
+    # Startup: run database migrations
+    print("[STARTUP] Running database migrations...")
+    run_migrations()
+    print("[STARTUP] Database migrations complete.")
+
     # Startup: initialize Firebase Admin SDK
     print("[STARTUP] Initializing Firebase Admin SDK...")
     init_firebase()
