@@ -1,35 +1,11 @@
 # docker-compose.yml (development)
 services:
-  db:
-    image: postgres:16-alpine
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: admin
-      POSTGRES_DB: projectHeliosPgDb
-    ports:
-      - "5432:5432"
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres -d projectHeliosPgDb"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
-
   app:
     build: .
     ports:
       - "8000:8000"
-    environment:
-      DATABASE_URL: postgresql+asyncpg://postgres:admin@db:5432/projectHeliosPgDb
-      FIREBASE_PROJECT_ID: project-helios-72de9
-      FIREBASE_SERVICE_ACCOUNT_PATH: /run/secrets/project-helios-firebase-service-account.json
-    depends_on:
-      db:
-        condition: service_healthy
+    env_file:
+      - .env
     volumes:
       - ./app:/code/app
       - ./project-helios-firebase-service-account.json:/run/secrets/project-helios-firebase-service-account.json:ro
-
-volumes:
-  pgdata:
