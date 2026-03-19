@@ -1,0 +1,186 @@
+Smart move. Here's the reordered list, heaviest UI first:
+
+1. **Today Dashboard**
+2. **Daily Analysis**
+3. **History**
+4. **Create Daily Log**
+5. **Edit Daily Log**
+6. **Targets / Settings**
+7. **Empty State**
+8. **Sign In**
+9. **Create Account**
+10. **Forgot Password**
+11. **Welcome**
+12. **Loading & Success States**
+
+---
+
+**Screen 1 of 12 — Today Dashboard**
+
+```text
+Design a high-fidelity mobile-first app screen for Project Helios, a personal health tracking app used by a small number of people. Each user has a private account and isolated personal data. This is not a social or collaborative product. Users authenticate with email and password via Firebase Auth. The app lets users log daily health metrics (calories, protein, sleep hours), toggle habits (workout completed, is period day), set personal targets, browse history by date, and view daily analysis comparing actual values against stored target snapshots.
+
+Design goals: minimalist, user friendly, calm, premium, modern, clear information hierarchy, fast to understand, fast to use on mobile, elegant and responsive on desktop, attractive without feeling flashy or cluttered. Visual style: wellness and productivity aesthetic, soft neutral background, restrained accent palette using sage, muted teal, clay, warm gray, or soft blue, generous whitespace, rounded cards and inputs, refined typography with a slightly editorial feel, subtle shadows and depth, accessible contrast. Avoid generic SaaS dashboard styling, purple-heavy palettes, heavy glassmorphism, and dark-mode-only presentation. Use a consistent design system with unified buttons, cards, inputs, toggles, chips, tabs, progress styles, and status styles. Output a polished product UI, not a wireframe. Generate only this one screen.
+
+Screen: Today Dashboard
+Purpose: Give the user an immediate view of today's health progress and the next most important actions.
+Requirements: Show today's date clearly. Show summary cards or modules for calories, protein, and sleep. Show target progress for each metric as actual vs target. Show workout completed and is period day status. Include a strong primary CTA to log today or edit today. Include a quick path to history and targets or settings. The most important information should be visible quickly without excessive scrolling. Mobile-first layout. The screen should feel focused, calm, and useful at a glance. Avoid a cluttered dashboard feel. Use progress visualization only where it improves clarity. Introduce a subtle sense of daily momentum and consistency.
+```
+
+---
+
+**Screen 2 of 12 — Daily Analysis**
+
+```text
+Design a high-fidelity mobile-first app screen for Project Helios, a personal health tracking app used by a small number of people. Each user has a private account and isolated personal data. This is not a social or collaborative product. Users authenticate with email and password via Firebase Auth. The app lets users log daily health metrics (calories, protein, sleep hours), toggle habits (workout completed, is period day), set personal targets, browse history by date, and view daily analysis comparing actual values against stored target snapshots.
+
+Design goals: minimalist, user friendly, calm, premium, modern, clear information hierarchy, fast to understand, fast to use on mobile, elegant and responsive on desktop, attractive without feeling flashy or cluttered. Visual style: wellness and productivity aesthetic, soft neutral background, restrained accent palette using sage, muted teal, clay, warm gray, or soft blue, generous whitespace, rounded cards and inputs, refined typography with a slightly editorial feel, subtle shadows and depth, accessible contrast. Avoid generic SaaS dashboard styling, purple-heavy palettes, heavy glassmorphism, and dark-mode-only presentation. Use a consistent design system with unified buttons, cards, inputs, toggles, chips, tabs, progress styles, and status styles. Output a polished product UI, not a wireframe. Generate only this one screen. Match the visual system established in the Dashboard screen: same typography style, spacing rhythm, corner radius, color palette, card treatment, form styling, and overall emotional tone.
+
+Screen: Daily Analysis
+Purpose: Show the user how one day's actual values compare with that day's stored targets.
+Requirements: Selected date shown clearly. Comparison for calories, protein, and sleep showing actual vs target values. Show delta values clearly. Show simple status indicators such as met, under, or over. Show workout completed and is period day in a lightweight supporting section. Use charts or visual comparison only if they improve clarity. Mobile-first layout. Keep the screen clean and supportive, not judgmental. Avoid overloading the screen with analytics. Focus on clarity, balance, and calm visual feedback.
+```
+
+---
+
+**Screen 3 of 12 — History**
+
+```text
+Design a high-fidelity mobile-first app screen for Project Helios, a personal health tracking app used by a small number of people. Each user has a private account and isolated personal data. This is not a social or collaborative product. Users authenticate with email and password via Firebase Auth. The app lets users log daily health metrics (calories, protein, sleep hours), toggle habits (workout completed, is period day), set personal targets, browse history by date, and view daily analysis comparing actual values against stored target snapshots.
+
+Design goals: minimalist, user friendly, calm, premium, modern, clear information hierarchy, fast to understand, fast to use on mobile, elegant and responsive on desktop, attractive without feeling flashy or cluttered. Visual style: wellness and productivity aesthetic, soft neutral background, restrained accent palette using sage, muted teal, clay, warm gray, or soft blue, generous whitespace, rounded cards and inputs, refined typography with a slightly editorial feel, subtle shadows and depth, accessible contrast. Avoid generic SaaS dashboard styling, purple-heavy palettes, heavy glassmorphism, and dark-mode-only presentation. Use a consistent design system with unified buttons, cards, inputs, toggles, chips, tabs, progress styles, and status styles. Output a polished product UI, not a wireframe. Generate only this one screen. Match the visual system established in the previous screens: same typography style, spacing rhythm, corner radius, color palette, card treatment, form styling, and overall emotional tone.
+
+Screen: History
+Purpose: Help the user browse previous logs quickly and understand which dates contain entries.
+Requirements: Clear date-based browsing. Distinguish logged dates from empty dates. Show a clean list or calendar-based history pattern. Make it easy to open one day's details. Include subtle summary cues without overcrowding the layout. The screen should still feel clean even with many entries. Mobile-first layout. Favor usability and scanning speed. Avoid overly complex data density. Make this feel like a personal timeline with strong clarity.
+```
+
+---
+
+**Screen 4 of 12 — Create Daily Log**
+
+```text
+Design a high-fidelity mobile-first app screen for Project Helios, a personal health tracking app used by a small number of people. Each user has a private account and isolated personal data. This is not a social or collaborative product. Users authenticate with email and password via Firebase Auth. The app lets users log daily health metrics (calories, protein, sleep hours), toggle habits (workout completed, is period day), set personal targets, browse history by date, and view daily analysis comparing actual values against stored target snapshots.
+
+Design goals: minimalist, user friendly, calm, premium, modern, clear information hierarchy, fast to understand, fast to use on mobile, elegant and responsive on desktop, attractive without feeling flashy or cluttered. Visual style: wellness and productivity aesthetic, soft neutral background, restrained accent palette using sage, muted teal, clay, warm gray, or soft blue, generous whitespace, rounded cards and inputs, refined typography with a slightly editorial feel, subtle shadows and depth, accessible contrast. Avoid generic SaaS dashboard styling, purple-heavy palettes, heavy glassmorphism, and dark-mode-only presentation. Use a consistent design system with unified buttons, cards, inputs, toggles, chips, tabs, progress styles, and status styles. Output a polished product UI, not a wireframe. Generate only this one screen. Match the visual system established in the previous screens: same typography style, spacing rhythm, corner radius, color palette, card treatment, form styling, and overall emotional tone.
+
+Screen: Create Daily Log
+Purpose: Allow the user to log health data for a selected date in a calm frictionless way.
+Requirements: Show the selected date clearly. Inputs for calories, protein, and sleep hours. Toggles for workout completed and is period day. Primary CTA to save the log. Optional small section showing current targets for reference. Validation and helper text should be simple and non-technical. Mobile-first layout. The screen should feel easy, light, and efficient. Use clean spacing and grouping so the form never feels dense. Inputs should feel touch-friendly and premium.
+```
+
+---
+
+**Screen 5 of 12 — Edit Daily Log**
+
+```text
+Design a high-fidelity mobile-first app screen for Project Helios, a personal health tracking app used by a small number of people. Each user has a private account and isolated personal data. This is not a social or collaborative product. Users authenticate with email and password via Firebase Auth. The app lets users log daily health metrics (calories, protein, sleep hours), toggle habits (workout completed, is period day), set personal targets, browse history by date, and view daily analysis comparing actual values against stored target snapshots.
+
+Design goals: minimalist, user friendly, calm, premium, modern, clear information hierarchy, fast to understand, fast to use on mobile, elegant and responsive on desktop, attractive without feeling flashy or cluttered. Visual style: wellness and productivity aesthetic, soft neutral background, restrained accent palette using sage, muted teal, clay, warm gray, or soft blue, generous whitespace, rounded cards and inputs, refined typography with a slightly editorial feel, subtle shadows and depth, accessible contrast. Avoid generic SaaS dashboard styling, purple-heavy palettes, heavy glassmorphism, and dark-mode-only presentation. Use a consistent design system with unified buttons, cards, inputs, toggles, chips, tabs, progress styles, and status styles. Output a polished product UI, not a wireframe. Generate only this one screen. Match the visual system established in the previous screens: same typography style, spacing rhythm, corner radius, color palette, card treatment, form styling, and overall emotional tone.
+
+Screen: Edit Daily Log
+Purpose: Allow the user to update an existing daily log for a past or current date.
+Requirements: Show the selected date clearly. Pre-filled inputs for calories, protein, and sleep. Pre-filled toggles for workout completed and is period day. Primary CTA to update the log. Secondary action for delete only if it can be presented safely and unobtrusively. Include subtle indication that this is an existing record being edited. Mobile-first layout. Keep visual continuity with the create log screen. Make edit state feel confident and clear without adding visual noise. Prioritize ease of correction and quick saving.
+```
+
+---
+
+**Screen 6 of 12 — Targets / Settings**
+
+```text
+Design a high-fidelity mobile-first app screen for Project Helios, a personal health tracking app used by a small number of people. Each user has a private account and isolated personal data. This is not a social or collaborative product. Users authenticate with email and password via Firebase Auth. The app lets users log daily health metrics (calories, protein, sleep hours), toggle habits (workout completed, is period day), set personal targets, browse history by date, and view daily analysis comparing actual values against stored target snapshots.
+
+Design goals: minimalist, user friendly, calm, premium, modern, clear information hierarchy, fast to understand, fast to use on mobile, elegant and responsive on desktop, attractive without feeling flashy or cluttered. Visual style: wellness and productivity aesthetic, soft neutral background, restrained accent palette using sage, muted teal, clay, warm gray, or soft blue, generous whitespace, rounded cards and inputs, refined typography with a slightly editorial feel, subtle shadows and depth, accessible contrast. Avoid generic SaaS dashboard styling, purple-heavy palettes, heavy glassmorphism, and dark-mode-only presentation. Use a consistent design system with unified buttons, cards, inputs, toggles, chips, tabs, progress styles, and status styles. Output a polished product UI, not a wireframe. Generate only this one screen. Match the visual system established in the previous screens: same typography style, spacing rhythm, corner radius, color palette, card treatment, form styling, and overall emotional tone.
+
+Screen: Targets and Settings
+Purpose: Allow the user to update personal targets and view minimal account settings.
+Requirements: Inputs for calorie target, protein target, and sleep target. Primary CTA to save updated targets. Minimal account section showing email and basic profile status. Small supporting text that explains these targets affect future logging and analysis. Layout should feel trustworthy and easy to use. Mobile-first layout. Keep the screen sparse but not empty. This should feel like a calm personal settings space, not an admin panel. Maintain the premium wellness aesthetic.
+```
+
+---
+
+**Screen 7 of 12 — Empty State**
+
+```text
+Design a high-fidelity mobile-first app screen for Project Helios, a personal health tracking app used by a small number of people. Each user has a private account and isolated personal data. This is not a social or collaborative product. Users authenticate with email and password via Firebase Auth. The app lets users log daily health metrics (calories, protein, sleep hours), toggle habits (workout completed, is period day), set personal targets, browse history by date, and view daily analysis comparing actual values against stored target snapshots.
+
+Design goals: minimalist, user friendly, calm, premium, modern, clear information hierarchy, fast to understand, fast to use on mobile, elegant and responsive on desktop, attractive without feeling flashy or cluttered. Visual style: wellness and productivity aesthetic, soft neutral background, restrained accent palette using sage, muted teal, clay, warm gray, or soft blue, generous whitespace, rounded cards and inputs, refined typography with a slightly editorial feel, subtle shadows and depth, accessible contrast. Avoid generic SaaS dashboard styling, purple-heavy palettes, heavy glassmorphism, and dark-mode-only presentation. Use a consistent design system with unified buttons, cards, inputs, toggles, chips, tabs, progress styles, and status styles. Output a polished product UI, not a wireframe. Generate only this one screen. Match the visual system established in the previous screens: same typography style, spacing rhythm, corner radius, color palette, card treatment, form styling, and overall emotional tone.
+
+Screen: Empty State
+Purpose: Handle a case where the user has no logs yet or no data for the selected range.
+Requirements: Friendly and minimal empty-state messaging. Primary CTA to create the first log. Optional supporting text that explains the value of tracking consistently. Keep the composition visually polished and not barren. Mobile-first layout. The screen should feel motivating but restrained. Avoid generic empty-state illustrations unless they are subtle and refined. Use typography and spacing to create a premium feel.
+```
+
+---
+
+**Screen 8 of 12 — Sign In**
+
+```text
+Design a high-fidelity mobile-first app screen for Project Helios, a personal health tracking app used by a small number of people. Each user has a private account and isolated personal data. This is not a social or collaborative product. Users authenticate with email and password via Firebase Auth. The app lets users log daily health metrics (calories, protein, sleep hours), toggle habits (workout completed, is period day), set personal targets, browse history by date, and view daily analysis comparing actual values against stored target snapshots.
+
+Design goals: minimalist, user friendly, calm, premium, modern, clear information hierarchy, fast to understand, fast to use on mobile, elegant and responsive on desktop, attractive without feeling flashy or cluttered. Visual style: wellness and productivity aesthetic, soft neutral background, restrained accent palette using sage, muted teal, clay, warm gray, or soft blue, generous whitespace, rounded cards and inputs, refined typography with a slightly editorial feel, subtle shadows and depth, accessible contrast. Avoid generic SaaS dashboard styling, purple-heavy palettes, heavy glassmorphism, and dark-mode-only presentation. Use a consistent design system with unified buttons, cards, inputs, toggles, chips, tabs, progress styles, and status styles. Output a polished product UI, not a wireframe. Generate only this one screen. Match the visual system established in the previous screens: same typography style, spacing rhythm, corner radius, color palette, card treatment, form styling, and overall emotional tone.
+
+Screen: Sign In
+Purpose: Allow the user to sign in with email and password using Firebase Authentication.
+Requirements: Prominent email input field. Password input field with clear visibility toggle. Primary CTA to sign in. Secondary actions for create account and forgot password. Small helper text explaining the process in a simple trustworthy tone. Clear focus states and polished form styling. Validation should feel calm and non-technical. Mobile-first layout. Keep the form compact, elegant, and easy to scan. Make the sign-in experience feel premium and frictionless. Use whitespace and typography hierarchy to guide attention.
+```
+
+---
+
+**Screen 9 of 12 — Create Account**
+
+```text
+Design a high-fidelity mobile-first app screen for Project Helios, a personal health tracking app used by a small number of people. Each user has a private account and isolated personal data. This is not a social or collaborative product. Users authenticate with email and password via Firebase Auth. The app lets users log daily health metrics (calories, protein, sleep hours), toggle habits (workout completed, is period day), set personal targets, browse history by date, and view daily analysis comparing actual values against stored target snapshots.
+
+Design goals: minimalist, user friendly, calm, premium, modern, clear information hierarchy, fast to understand, fast to use on mobile, elegant and responsive on desktop, attractive without feeling flashy or cluttered. Visual style: wellness and productivity aesthetic, soft neutral background, restrained accent palette using sage, muted teal, clay, warm gray, or soft blue, generous whitespace, rounded cards and inputs, refined typography with a slightly editorial feel, subtle shadows and depth, accessible contrast. Avoid generic SaaS dashboard styling, purple-heavy palettes, heavy glassmorphism, and dark-mode-only presentation. Use a consistent design system with unified buttons, cards, inputs, toggles, chips, tabs, progress styles, and status styles. Output a polished product UI, not a wireframe. Generate only this one screen. Match the visual system established in the previous screens: same typography style, spacing rhythm, corner radius, color palette, card treatment, form styling, and overall emotional tone.
+
+Screen: Create Account
+Purpose: Allow a new user to create an account with email and password using Firebase Authentication.
+Requirements: Input fields for email, password, and confirm password. Primary CTA to create account. Secondary action to return to sign in. Small supporting text that communicates privacy and simplicity. Polished validation patterns for password mismatch or invalid email. The screen should feel lightweight and trustworthy. Mobile-first layout. Keep the screen minimal and calm, not enterprise-like. Form design should be touch-friendly and consistent with the sign-in screen. Avoid making the screen feel dense or technical.
+```
+
+---
+
+**Screen 10 of 12 — Forgot Password**
+
+```text
+Design a high-fidelity mobile-first app screen for Project Helios, a personal health tracking app used by a small number of people. Each user has a private account and isolated personal data. This is not a social or collaborative product. Users authenticate with email and password via Firebase Auth. The app lets users log daily health metrics (calories, protein, sleep hours), toggle habits (workout completed, is period day), set personal targets, browse history by date, and view daily analysis comparing actual values against stored target snapshots.
+
+Design goals: minimalist, user friendly, calm, premium, modern, clear information hierarchy, fast to understand, fast to use on mobile, elegant and responsive on desktop, attractive without feeling flashy or cluttered. Visual style: wellness and productivity aesthetic, soft neutral background, restrained accent palette using sage, muted teal, clay, warm gray, or soft blue, generous whitespace, rounded cards and inputs, refined typography with a slightly editorial feel, subtle shadows and depth, accessible contrast. Avoid generic SaaS dashboard styling, purple-heavy palettes, heavy glassmorphism, and dark-mode-only presentation. Use a consistent design system with unified buttons, cards, inputs, toggles, chips, tabs, progress styles, and status styles. Output a polished product UI, not a wireframe. Generate only this one screen. Match the visual system established in the previous screens: same typography style, spacing rhythm, corner radius, color palette, card treatment, form styling, and overall emotional tone.
+
+Screen: Forgot Password
+Purpose: Allow a user to request a password reset email in a simple and low-friction way.
+Requirements: Email input field. Primary CTA to send reset link. Secondary action to return to sign in. Calm success messaging area. Small supporting copy explaining what happens next. Keep the interaction reassuring and straightforward. Mobile-first layout. The UI should feel quiet, supportive, and easy to complete. Avoid heavy security-themed visuals. Preserve consistency with the sign-in and create account screens.
+```
+
+---
+
+**Screen 11 of 12 — Welcome**
+
+```text
+Design a high-fidelity mobile-first app screen for Project Helios, a personal health tracking app used by a small number of people. Each user has a private account and isolated personal data. This is not a social or collaborative product. Users authenticate with email and password via Firebase Auth. The app lets users log daily health metrics (calories, protein, sleep hours), toggle habits (workout completed, is period day), set personal targets, browse history by date, and view daily analysis comparing actual values against stored target snapshots.
+
+Design goals: minimalist, user friendly, calm, premium, modern, clear information hierarchy, fast to understand, fast to use on mobile, elegant and responsive on desktop, attractive without feeling flashy or cluttered. Visual style: wellness and productivity aesthetic, soft neutral background, restrained accent palette using sage, muted teal, clay, warm gray, or soft blue, generous whitespace, rounded cards and inputs, refined typography with a slightly editorial feel, subtle shadows and depth, accessible contrast. Avoid generic SaaS dashboard styling, purple-heavy palettes, heavy glassmorphism, and dark-mode-only presentation. Use a consistent design system with unified buttons, cards, inputs, toggles, chips, tabs, progress styles, and status styles. Output a polished product UI, not a wireframe. Generate only this one screen. Match the visual system established in the previous screens: same typography style, spacing rhythm, corner radius, color palette, card treatment, form styling, and overall emotional tone.
+
+Screen: Welcome
+Purpose: Introduce the product with clarity, calm, and trust. This is the first screen a user sees before authentication.
+Requirements: Include app name and a short elegant value proposition. Emphasize personal health tracking, consistency, and simplicity. Include a primary CTA to continue to sign in. Include subtle supporting text around privacy and personal use. Use a minimalist composition with strong typography and calm spacing. Keep the screen premium and emotionally reassuring, not overly clinical. Mobile-first layout. Make this feel like a polished product intro screen rather than a marketing landing page. Avoid illustrations unless subtle and highly refined. Focus on typography, spacing, and atmosphere.
+```
+
+---
+
+**Screen 12 of 12 — Loading & Success States**
+
+```text
+Design a high-fidelity mobile-first app screen for Project Helios, a personal health tracking app used by a small number of people. Each user has a private account and isolated personal data. This is not a social or collaborative product. Users authenticate with email and password via Firebase Auth. The app lets users log daily health metrics (calories, protein, sleep hours), toggle habits (workout completed, is period day), set personal targets, browse history by date, and view daily analysis comparing actual values against stored target snapshots.
+
+Design goals: minimalist, user friendly, calm, premium, modern, clear information hierarchy, fast to understand, fast to use on mobile, elegant and responsive on desktop, attractive without feeling flashy or cluttered. Visual style: wellness and productivity aesthetic, soft neutral background, restrained accent palette using sage, muted teal, clay, warm gray, or soft blue, generous whitespace, rounded cards and inputs, refined typography with a slightly editorial feel, subtle shadows and depth, accessible contrast. Avoid generic SaaS dashboard styling, purple-heavy palettes, heavy glassmorphism, and dark-mode-only presentation. Use a consistent design system with unified buttons, cards, inputs, toggles, chips, tabs, progress styles, and status styles. Output a polished product UI, not a wireframe. Generate only this one screen. Match the visual system established in the previous screens: same typography style, spacing rhythm, corner radius, color palette, card treatment, form styling, and overall emotional tone.
+
+Screen: Loading and Success States
+Purpose: Show how the app communicates in-between states while preserving the calm premium experience.
+Requirements: Loading state for dashboard or log submission. Success confirmation state after saving a daily log or updating targets. Keep transitions visually light and non-disruptive. Use subtle feedback patterns, not loud celebratory UI. Maintain design system consistency. Mobile-first layout. Focus on elegant product behavior and calm reassurance. The feedback should feel modern and refined.
+```
+
+---
+
+If you run out of tokens after screen 7 (Empty State), you'll still have all the core app screens locked in. The auth and utility screens left over (8-12) are structurally simple enough to derive from the established design system later.

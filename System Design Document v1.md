@@ -12,7 +12,7 @@
 
 | Principle | Rationale |
 |---|---|
-| **Simplicity first** | V1 is a single-user personal tool; avoid premature abstractions. |
+| **Simplicity first** | V1 is a personal tracking tool with isolated per-user data; avoid premature abstractions. |
 | **API-first** | Decouple backend from any future frontend (web, mobile, CLI). |
 | **Snapshot integrity** | Historical evaluations must never silently change. |
 | **Extensibility** | Schema and code structure must accommodate new metrics, summaries, and analytics without rewrites. |
@@ -29,7 +29,7 @@
 | **ORM** | SQLAlchemy 2.x (async) | Mature, flexible, supports both ORM and raw SQL when needed. |
 | **Migrations** | Alembic | De-facto standard for SQLAlchemy migrations. |
 | **Database** | PostgreSQL 16 | ACID transactions, robust date/range queries, easy to scale. Supports `UNIQUE` constraints, partial indexes, and `CHECK` constraints natively. |
-| **Auth** | Firebase Auth (Phone OTP) | Outsourced auth — handles OTP delivery, verification, and token issuance. Zero auth code to maintain. |
+| **Auth** | Firebase Auth (Email/Password) | Outsourced auth — handles sign-in, credential storage, and token issuance. Zero auth code to maintain in the backend. |
 | **Auth Verification** | `firebase-admin` SDK | Server-side ID token verification. Firebase issues JWTs; our backend validates them. |
 | **Validation** | Pydantic v2 | Already required by FastAPI; used for all request/response schemas. |
 | **Testing** | pytest + httpx (async) | First-class async test support for FastAPI. |
@@ -45,7 +45,7 @@
 │              Web App / Mobile App / CLI                       │
 └──────────┬──────────────────────┬────────────────────────────┘
            │                      │
-           │  Phone OTP Flow      │  HTTPS / JSON
+           │  Email Auth Flow     │  HTTPS / JSON
            │  (handled entirely   │  Authorization: Bearer <Firebase ID Token>
            │   by Firebase SDK)   │
            ▼                      ▼
@@ -53,8 +53,8 @@
 │   Firebase Auth    │   │          API Gateway Layer          │
 │   (External)       │   │           (FastAPI App)             │
 │                    │   │                                     │
-│  • Send OTP        │   │  ┌────────────┐ ┌────────────────┐  │
-│  • Verify OTP      │   │  │ Logs Router│ │ Targets Router │  │
+│  • Sign in users   │   │  ┌────────────┐ ┌────────────────┐  │
+│  • Manage creds    │   │  │ Logs Router│ │ Targets Router │  │
 │  • Issue ID Token  │   │  └─────┬──────┘ └──────┬─────────┘  │
 │  • Manage users    │   │        │               │            │
 └────────────────────┘   │        ▼               ▼            │
@@ -103,7 +103,7 @@
 │──────────────────│                  │──────────────────│
 │ id (PK)          │                  │ id (PK)          │
 │ firebase_uid (UQ)│       1:N        │ user_id (FK, UQ) │
-│ phone_number     │──────────┐       │ calorie_target   │
+│ email            │──────────┐       │ calorie_target   │
 │ created_at       │          │       │ protein_target   │
 └──────────────────┘          │       │ sleep_target     │
                               │       │ updated_at       │
@@ -138,7 +138,7 @@
 |---|---|---|---|
 | `id` | `UUID` | PK, default `gen_random_uuid()` | Internal ID. Avoids sequential exposure. |
 | `firebase_uid` | `VARCHAR(128)` | NOT NULL, UNIQUE | Firebase Auth UID. Used to map Firebase tokens to local user rows. |
-| `phone_number` | `VARCHAR(20)` | NOT NULL, UNIQUE | E.164 format (e.g. `+919876543210`). Synced from Firebase on first login. |
+| `email` | `VARCHAR(255)` | NOT NULL, UNIQUE | Email address from Firebase. Synced from Firebase on first login. |
 | `created_at` | `TIMESTAMPTZ` | NOT NULL, default `now()` | |
 
 ### **target_configs**
@@ -180,7 +180,7 @@
 | `ix_daily_logs_user_date_range` | `daily_logs` | `(user_id, date)` | B-tree | Efficiently serves date-range queries (covered by unique index). |
 | `ix_target_configs_user` | `target_configs` | `(user_id)` | UNIQUE B-tree | Fast config lookup per user. |
 | `ix_users_firebase_uid` | `users` | `(firebase_uid)` | UNIQUE B-tree | Map Firebase token → local user. |
-| `ix_users_phone` | `users` | `(phone_number)` | UNIQUE B-tree | Prevent duplicate phone registrations. |
+| `ix_users_email` | `users` | `(email)` | UNIQUE B-tree | Prevent duplicate email registrations. |
 
 ## **4.4 Why Not a Target History Table?**
 
@@ -204,16 +204,15 @@ Authentication is handled **entirely by Firebase Auth on the client side**. The 
 
 ### **Client-Side Flow (Firebase SDK)**
 
-1. Client calls Firebase SDK → `signInWithPhoneNumber(phoneNumber)`
-2. User receives SMS OTP.
-3. User enters OTP → Firebase SDK verifies → returns Firebase ID Token.
+1. Client calls Firebase SDK → `signInWithEmailAndPassword(email, password)`.
+2. Firebase validates credentials and returns a Firebase ID Token.
 4. Client sends ID Token in `Authorization: Bearer <firebase_id_token>` header on every API request.
 5. Firebase SDK handles token refresh automatically (tokens expire after ~1 hour).
 
 ### **Server-Side Flow (on every request)**
 
 1. Extract `Bearer` token from `Authorization` header.
-2. Call `firebase_admin.auth.verify_id_token(token)` → returns decoded claims including `uid` and `phone_number`.
+2. Call `firebase_admin.auth.verify_id_token(token)` → returns decoded claims including `uid` and `email`.
 3. Look up local `users` row by `firebase_uid`.
 4. **Auto-provision:** If no local user exists, create one (first-time login). This eliminates a separate registration step.
 5. Inject `user_id` (our internal UUID) into the request context via FastAPI dependency.
@@ -222,7 +221,7 @@ Authentication is handled **entirely by Firebase Auth on the client side**. The 
 ```json
 {
   "id": "uuid",
-  "phone_number": "+919876543210",
+  "email": "user@example.com",
   "created_at": "2026-02-15T00:00:00Z"
 }
 ```
@@ -527,12 +526,12 @@ project-helios/
 
 ## **8.1 Strategy: Outsourced to Firebase Auth**
 
-All user authentication is delegated to **Firebase Auth (Phone Number provider)**. The backend performs **zero** auth operations — no password storage, no OTP sending, no token issuance.
+All user authentication is delegated to **Firebase Auth (Email/Password provider)**. The backend performs **zero** auth operations — no password storage, no credential verification, no token issuance.
 
 | Responsibility | Handled By |
 |---|---|
-| OTP delivery (SMS) | Firebase Auth |
-| OTP verification | Firebase Auth |
+| Email/password sign-in | Firebase Auth |
+| Credential storage and hashing | Firebase Auth |
 | Token issuance (JWT) | Firebase Auth |
 | Token refresh | Firebase Client SDK (automatic) |
 | Token verification | Backend via `firebase-admin` SDK |
@@ -545,7 +544,7 @@ Decoded payload (relevant fields):
 ```json
 {
   "sub": "firebase-uid-string",
-  "phone_number": "+919876543210",
+  "email": "user@example.com",
   "iat": 1739998200,
   "exp": 1740001800,
   "iss": "https://securetoken.google.com/<project-id>",
@@ -558,13 +557,13 @@ Tokens are **RS256-signed** by Google and verified using Google's public keys (r
 ## **8.3 Auth Flow**
 
 ```
-Client: Firebase SDK → Phone OTP → verify → get ID Token
+Client: Firebase SDK → Email sign-in → get ID Token
   │
   │  Authorization: Bearer <firebase_id_token>
   ▼
 Backend: verify_id_token(token)
   │
-  ├─ Valid → extract firebase_uid, phone_number
+  ├─ Valid → extract firebase_uid, email
   │    │
   │    ├─ User exists in DB? → inject user_id into request
   │    │
@@ -577,7 +576,7 @@ Backend: verify_id_token(token)
 
 On the **first authenticated API call**, if no `users` row exists for the `firebase_uid`:
 
-1. Insert new row: `firebase_uid`, `phone_number` (from token), `created_at`.
+1. Insert new row: `firebase_uid`, `email` (from token), `created_at`.
 2. This replaces a traditional "register" endpoint.
 3. Subsequent requests find the existing row by `firebase_uid`.
 
@@ -591,9 +590,9 @@ All data queries are scoped by `user_id` (internal UUID) extracted after Firebas
 
 | Benefit | Detail |
 |---|---|
-| **Zero auth code** | No password hashing, no OTP sending, no token generation to build or maintain. |
-| **Phone OTP out of the box** | Firebase handles SMS delivery globally, rate limiting, and abuse prevention. |
-| **Free tier** | 10K phone verifications/month free — sufficient for a personal tracker. |
+| **Zero backend auth code** | No password hashing, no credential verification, and no token generation to build or maintain in our API. |
+| **Email auth out of the box** | Firebase handles account sign-in, password storage, and recovery flows. |
+| **Low operational overhead** | Suitable for a small personal tracker without building a custom auth service. |
 | **Client SDK maturity** | SDKs for Web, iOS, Android, Flutter — any future frontend works instantly. |
 | **Migration path** | If needed later, Firebase users can be exported or replaced with another provider. Backend only depends on token verification. |
 
@@ -638,7 +637,7 @@ All data queries are scoped by `user_id` (internal UUID) extracted after Firebas
 | `protein_target` | Integer, ≥ 0, required |
 | `sleep_target` | Decimal, ≥ 0, ≤ 24.0, required |
 | `date` | ISO 8601 date (`YYYY-MM-DD`), must not be in the future |
-| `phone_number` | E.164 format (managed by Firebase, not validated by backend) |
+| `email` | Valid email address (managed by Firebase, not validated by backend) |
 
 ---
 
@@ -656,7 +655,7 @@ All data queries are scoped by `user_id` (internal UUID) extracted after Firebas
 | 8 | **No future-date logging** | Prevents invalid data entry. Targets for future dates are undefined. |
 | 9 | **Single target_config row per user** (not versioned) | V1 only needs "current targets." History is preserved in log snapshots. Simpler model. |
 | 10 | **Async SQLAlchemy** | Matches FastAPI's async nature. Avoids thread pool overhead for DB I/O. |
-| 11 | **Outsourced auth (Firebase)** | Eliminates password management, OTP infrastructure, and token issuance from our codebase. Backend only verifies tokens — ~20 lines of code vs. an entire auth module. |
+| 11 | **Outsourced auth (Firebase)** | Eliminates password management, credential verification, and token issuance from our codebase. Backend only verifies tokens — far less code than a custom auth module. |
 | 12 | **Auto-provisioning users** | No register endpoint needed. First valid Firebase token triggers user creation. Frictionless onboarding. |
 
 ---
@@ -790,4 +789,4 @@ These are **not in V1 scope** but the design accommodates them:
 
 # **17. Summary**
 
-The system is a **3-layer REST API** (Router → Service → Repository) backed by **PostgreSQL**, built with **FastAPI + SQLAlchemy async**. Authentication is **fully outsourced to Firebase Auth** (phone number OTP) — the backend carries zero auth logic beyond token verification and user auto-provisioning. The core invariant — **target snapshot integrity** — is enforced by storing snapshot values directly in each daily log row and only updating today's snapshot when targets change. Analysis is computed on-the-fly to avoid stale-data bugs. The entire stack is containerized for reproducible development, and the project structure is designed for clean testability and future extensibility.
+The system is a **3-layer REST API** (Router → Service → Repository) backed by **PostgreSQL**, built with **FastAPI + SQLAlchemy async**. Authentication is **fully outsourced to Firebase Auth** (email/password) — the backend carries zero auth logic beyond token verification and user auto-provisioning. The core invariant — **target snapshot integrity** — is enforced by storing snapshot values directly in each daily log row and only updating today's snapshot when targets change. Analysis is computed on-the-fly to avoid stale-data bugs. The entire stack is containerized for reproducible development, and the project structure is designed for clean testability and future extensibility.

@@ -14,6 +14,7 @@
 
 Build a personal health tracking system that enables users to:
 
+* Authenticate with email-based sign-in  
 * Log daily health metrics  
 * Track workout completion  
 * Track menstrual cycle days (optional)  
@@ -156,6 +157,19 @@ Evaluation always uses the stored target snapshot for that day.
 
 ---
 
+## **5.6 Authentication**
+
+Users authenticate with **email-based Firebase Auth**.
+
+Authentication requirements:
+
+* The frontend handles sign-in using Firebase Authentication  
+* The backend accepts Firebase ID tokens on protected requests  
+* The backend auto-provisions a local user record on first authenticated use  
+* Each authenticated user can access only their own data  
+
+---
+
 # **6\. Functional Requirements (FR)**
 
 ---
@@ -224,6 +238,12 @@ System shall allow retrieval of Daily Logs by date or date range.
 
 ---
 
+### **FR9 – Authentication**
+
+System shall require authenticated access using email-based Firebase Authentication and shall scope all data access to the authenticated user.
+
+---
+
 # **7\. Business Rules**
 
 1. Only one Daily Log per date per user.  
@@ -276,6 +296,9 @@ System must allow future addition of:
   ### **User**
 
 * id
+* firebase\_uid
+* email
+* created\_at
 
   ### **TargetConfig**
 
