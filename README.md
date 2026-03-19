@@ -5,7 +5,7 @@
 ### Prerequisites
 - Python 3.12+
 - PostgreSQL 16 (or Docker)
-- Firebase project with Phone Auth enabled
+- Firebase project with Email/Password Auth enabled
 
 ### 1. Clone & install dependencies
 
@@ -27,7 +27,7 @@ cp .env.example .env
 
 1. Go to [Firebase Console](https://console.firebase.google.com/)
 2. Create a project (or use existing one)
-3. Enable **Phone Number** sign-in under Authentication → Sign-in method
+3. Enable **Email/Password** sign-in under Authentication → Sign-in method
 4. Generate a service account key: Project Settings → Service Accounts → Generate New Private Key
 5. Save the JSON file as `firebase-service-account.json` in the project root
 
